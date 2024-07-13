@@ -22,8 +22,9 @@ public class SpringBootReviewApplication {
 		// Spring Container == ApplicationContext
 		GenericApplicationContext context = new GenericApplicationContext();
 
-		// HelloController 를 Bean 으로 등록
+		// Bean 으로 등록
 		context.registerBean(HelloController.class);
+		context.registerBean(SimpleHelloService.class);
 
 		// 등록된 Bean 을 만들 어서 가지고 있음 (초기화 작업)
 		context.refresh();

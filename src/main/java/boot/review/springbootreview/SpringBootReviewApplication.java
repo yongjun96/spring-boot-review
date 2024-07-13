@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.server.WebServer;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
-import org.springframework.http.HttpHeaders;
+import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,13 +19,21 @@ public class SpringBootReviewApplication {
 
 	public static void main(String[] args) {
 
+		// Spring Container == ApplicationContext
+		GenericApplicationContext context = new GenericApplicationContext();
+
+		// HelloController 를 Bean 으로 등록
+		context.registerBean(HelloController.class);
+
+		// 등록된 Bean 을 만들 어서 가지고 있음 (초기화 작업)
+		context.refresh();
+
+
 		ServletWebServerFactory serverFactory = new TomcatServletWebServerFactory();
 
 		// servlet container 를 만드는 함수
 		// 다른 서버도 사용할 수 있도록 추상화 했기 때문에 webServer 를 사용
 		WebServer webServer = serverFactory.getWebServer(servletContext -> {
-
-			HelloController helloController = new HelloController();
 
 			// frontController 생성
             servletContext.addServlet("frontController", new HttpServlet() {
@@ -38,19 +46,15 @@ public class SpringBootReviewApplication {
 					if(req.getRequestURI().equals("/servlet-request") && req.getMethod().equals(HttpMethod.GET.name())){
 						String name = req.getParameter("name");
 
-						// 요청 에서 받아온 Parameter 를 가지고 helloController 에 Method 에서 로직을 수행한 뒤 리턴 받을 수도 있음
+						// 동록된 Bean 을 가져 와서 사용
+						HelloController helloController = context.getBean(HelloController.class);
+
 						String ret = helloController.hello(name);
 
 						// 응답 생성
-						resp.setStatus(HttpStatus.OK.value());
-						resp.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_PLAIN_VALUE);
+						resp.setContentType(MediaType.TEXT_PLAIN_VALUE);
 						resp.getWriter().println(ret);
 					}
-
-					else if (req.getRequestURI().equals("/user")) {
-						// 해당 요청의 응답 작성
-					}
-
 					else {
 						resp.setStatus(HttpStatus.NOT_FOUND.value());
 					}

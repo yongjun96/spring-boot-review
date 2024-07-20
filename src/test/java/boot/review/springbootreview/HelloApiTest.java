@@ -24,7 +24,7 @@ public class HelloApiTest {
         Assertions.assertThat(res.getStatusCode()).isEqualTo(HttpStatus.OK);
         // startsWith -> 앞에서 비교 하는 값과 일치 하면 (contains)와 비슷 함
         Assertions.assertThat(res.getHeaders().getFirst(HttpHeaders.CONTENT_TYPE)).startsWith(MediaType.TEXT_PLAIN_VALUE);
-        Assertions.assertThat(res.getBody()).isEqualTo("hello Spring");
+        Assertions.assertThat(res.getBody()).isEqualTo("*hello Spring*");
     }
 
 

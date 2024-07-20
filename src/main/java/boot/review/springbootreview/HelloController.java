@@ -1,10 +1,7 @@
 package boot.review.springbootreview;
 
-import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Objects;
 
 
 // 1. DispatcherServlet 이 정보를 뒤질 때 class level 의 정보를 먼저 확인

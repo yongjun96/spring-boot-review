@@ -1,4 +1,4 @@
-package boot.review.springbootreview;
+package boot.review.hello;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;

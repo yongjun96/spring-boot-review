@@ -1,5 +1,6 @@
-package boot.review.springbootreview;
+package boot.review.hello;
 
+import boot.review.config.MySpringBootApplication;
 import org.springframework.boot.SpringApplication;
 
 @MySpringBootApplication

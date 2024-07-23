@@ -1,4 +1,4 @@
-package boot.review.springbootreview;
+package boot.review.hello;
 
 public interface HelloService {
 
